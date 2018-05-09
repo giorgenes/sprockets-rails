@@ -88,13 +88,15 @@ module Sprockets
 
       # Configuration options that should invalidate
       # the Sprockets cache when changed.
-      app.assets.version = [
+      version_list = [
         app.assets.version,
         config.assets.version,
         config.action_controller.relative_url_root,
         (config.action_controller.asset_host unless config.action_controller.asset_host.respond_to?(:call)),
         Sprockets::Rails::VERSION
-      ].compact.join('-')
+      ]
+      app.assets.version = version_list.compact.join('-')
+      puts "---> version list is #{version_list.inspect}"
 
       # Copy config.assets.paths to Sprockets
       config.assets.paths.each do |path|
